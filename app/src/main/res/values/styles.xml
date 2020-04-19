@@ -1,11 +1,19 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimary">@color/material_color_primary</item>
+        <item name="colorPrimaryVariant">@color/material_color_primary_variant</item>
+        <item name="colorOnPrimary">@color/material_color_on_primary</item>
+        <item name="colorSecondary">@color/material_color_secondary</item>
+        <item name="colorSecondaryVariant">@color/material_color_secondary_variant</item>
+        <item name="colorOnSecondary">@color/material_color_on_secondary</item>
+
+        <item name="colorPrimaryDark">?attr/colorPrimaryVariant</item>
+
+        <item name="appBarLayoutStyle">@style/AppTheme.AppBarLayout</item>
+        <item name="toolbarStyle">@style/AppTheme.Toolbar</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -13,8 +21,8 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="AppTheme.AppBarLayout" parent="Widget.MaterialComponents.AppBarLayout.Surface" />
 
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="AppTheme.Toolbar" parent="Widget.MaterialComponents.Toolbar.Surface" />
 
 </resources>
