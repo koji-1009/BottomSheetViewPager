@@ -1,13 +1,20 @@
 package com.dr1009.app.bsvp
 
 import android.os.Bundle
-import com.google.android.material.snackbar.Snackbar
-import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import android.view.ViewGroup
+import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.observe
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import com.dr1009.app.bsvp.databinding.ActivityMainBinding
+import com.dr1009.app.bsvp.databinding.RecyclerCardAnimalBinding
 
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
+
+    private val viewModel: MainViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -15,9 +22,13 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
 
-        binding.fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
+        val adapter = MainRecyclerViewAdapter()
+        binding.recyclerView.adapter = adapter
+        viewModel.animalList.observe(this, adapter::submitList)
+
+        binding.fab.setOnClickListener {
+            val bottomSheetDialog = MainBottomSheetDialogFragment.newInstance()
+            bottomSheetDialog.show(supportFragmentManager, MainBottomSheetDialogFragment.TAG)
         }
     }
 
@@ -34,6 +45,33 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         return when (item.itemId) {
             R.id.action_settings -> true
             else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    private inner class MainRecyclerViewAdapter :
+        ListAdapter<Animal, SimpleViewHolder<RecyclerCardAnimalBinding>>(
+            object : DiffUtil.ItemCallback<Animal>() {
+                override fun areItemsTheSame(oldItem: Animal, newItem: Animal): Boolean =
+                    oldItem.id == newItem.id
+
+                override fun areContentsTheSame(oldItem: Animal, newItem: Animal): Boolean =
+                    oldItem == newItem
+            }
+        ) {
+        override fun onCreateViewHolder(
+            parent: ViewGroup,
+            viewType: Int
+        ): SimpleViewHolder<RecyclerCardAnimalBinding> =
+            SimpleViewHolder(parent.inflate(R.layout.recycler_card_animal))
+
+        override fun onBindViewHolder(
+            holder: SimpleViewHolder<RecyclerCardAnimalBinding>,
+            position: Int
+        ) {
+            holder.binding?.let {
+                it.animal = getItem(position)
+                it.executePendingBindings()
+            }
         }
     }
 }
