@@ -31,6 +31,18 @@ private val family = listOf(
 class MainViewModel : ViewModel() {
 
     private val animals = family.toMutableList()
-    val animalList = MutableLiveData(animals)
+    val animalList = MutableLiveData(animals.toList())
 
+    fun currentListSize() = animals.size
+
+    fun findAnimal(position: Int) = animals[position]
+
+    fun updateAnimal(position: Int, name: String, memo: String) {
+        val animal = animals.removeAt(position).copy(
+            name = name,
+            memo = memo
+        )
+        animals.add(position, animal)
+        animalList.value = animals.toList()
+    }
 }

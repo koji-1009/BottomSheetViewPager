@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">BottomSheetViewPager</string>
     <string name="action_settings">Settings</string>
+    <string name="save">save</string>
+
+    <string name="birthday">Birthday</string>
+    <string name="name">Name</string>
+    <string name="memo">Memo</string>
 </resources>
